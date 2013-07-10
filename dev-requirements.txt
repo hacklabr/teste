@@ -1,3 +1,7 @@
-pytest
+ipdb
+ipython
 pip-tools
 pytest-cov
+pytest==2.3.5
+pyramid-debugtoolbar==1.0.6
+waitress==0.8.5
