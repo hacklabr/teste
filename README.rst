@@ -1,8 +1,8 @@
 teste
 =====
 
-.. image:: https://travis-ci.org/hacklabr/teste.png?branch=master
-    :target: https://travis-ci.org/hacklabr/teste
+.. image:: https://drone.io/github.com/hacklabr/teste/status.png
+    :target: https://drone.io/github.com/hacklabr/teste/latest
 
 .. image:: https://coveralls.io/repos/hacklabr/teste/badge.png?branch=master
     :target: https://coveralls.io/r/hacklabr/teste
