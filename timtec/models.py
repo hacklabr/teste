@@ -16,6 +16,7 @@ from horus.models import (
     ActivationMixin,
 )
 
+
 class BaseModel(object):
     """Base class which auto-generates tablename, and surrogate
     primary key column.
@@ -47,6 +48,7 @@ class BaseModel(object):
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
 Base = declarative_base(cls=BaseModel)
 
+
 class User(UserMixin, Base):
     pass
 
@@ -61,3 +63,25 @@ class UserGroup(UserGroupMixin, Base):
 
 class Activation(ActivationMixin, Base):
     pass
+
+
+class Video(Base):
+    name = sa.Column(sa.Unicode(255), nullable=False)
+
+
+class Course(Base):
+    """Course """
+    name = sa.Column(sa.Unicode(255), nullable=False)
+    description = sa.Column(sa.Text(255))
+    knowledge_acquired = sa.Column(sa.Text(255))
+    knowledge_required = sa.Column(sa.Text(255))
+    professors = sa.Column(sa.Integer, sa.ForeignKey("{0}.pk".format(User.__tablename__)))
+    intro_video = sa.Column(sa.Integer, sa.ForeignKey("{0}.pk".format(Video.__tablename__)))
+    students = sa.Column(sa.Integer, sa.ForeignKey("{0}.pk".format(User.__tablename__)))
+#     wiki
+#     forum
+#     notes
+
+
+class CourseClass(Base):
+    name = sa.Column(sa.Unicode(255), nullable=False)

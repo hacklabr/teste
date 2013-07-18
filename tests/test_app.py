@@ -16,7 +16,7 @@ def setup():
     engine = create_engine('sqlite://')
     from timtec.models import (
         Base,
-        User
+        User,
     )
     DBSession.configure(bind=engine)
     Base.metadata.create_all(engine)
@@ -37,9 +37,29 @@ def test_it():
     assert info['one'].username == 'one'
     assert info['project'] == 'timtec'
 
+
 def test_app_creation():
     from paste.deploy.loadwsgi import appconfig
     from timtec import main
     settings = appconfig('config:' + resource_filename(__name__, '../development.ini'))
     app = main(config, **settings)
     assert isinstance(app, router.Router)
+
+
+def test_course():
+    from timtec.models import Course
+    course = Course(name='Nome', description='desc')
+    assert course.name == 'Nome'
+    assert course.description == 'desc'
+
+
+def test_course_class():
+    from timtec.models import CourseClass
+    course_class = CourseClass(name='Nome')
+    assert course_class.name == 'Nome'
+
+
+def test_video():
+    from timtec.models import Video
+    video = Video(name='Nome')
+    assert video.name == 'Nome'
