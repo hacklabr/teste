@@ -30,6 +30,7 @@ requires = [
     'pyramid_debugtoolbar',
     'zope.sqlalchemy',
     'waitress',
+    'horus',
 ]
 
 setup(name='timtec',

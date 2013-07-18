@@ -14,12 +14,12 @@ def setup():
     engine = create_engine('sqlite://')
     from timtec.models import (
         Base,
-        MyModel,
+        User
     )
     DBSession.configure(bind=engine)
     Base.metadata.create_all(engine)
     with transaction.manager:
-        model = MyModel(name='one', value=55)
+        model = User(username='one', password='kdkdk', email='skdsk', id='kkk', pk='kk')
         DBSession.add(model)
 
 
@@ -32,5 +32,5 @@ def test_it():
     from timtec.views import my_view
     request = testing.DummyRequest()
     info = my_view(request)
-    assert info['one'].name == 'one'
+    assert info['one'].username == 'one'
     assert info['project'] == 'timtec'
