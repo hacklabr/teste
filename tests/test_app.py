@@ -1,7 +1,9 @@
 import transaction
-
-from pyramid import testing
-
+from pkg_resources import resource_filename
+from pyramid import (
+    testing,
+    router,
+)
 from timtec.models import DBSession
 
 config = None
@@ -34,3 +36,10 @@ def test_it():
     info = my_view(request)
     assert info['one'].username == 'one'
     assert info['project'] == 'timtec'
+
+def test_app_creation():
+    from paste.deploy.loadwsgi import appconfig
+    from timtec import main
+    settings = appconfig('config:' + resource_filename(__name__, '../development.ini'))
+    app = main(config, **settings)
+    assert isinstance(app, router.Router)
