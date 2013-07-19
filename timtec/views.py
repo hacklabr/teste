@@ -9,7 +9,7 @@ from .models import (
 )
 
 
-@view_config(route_name='home', renderer='templates/mytemplate.pt')
+@view_config(route_name='index', renderer='templates/mytemplate.pt')
 def my_view(request):
     try:
         one = DBSession.query(User).filter(User.username == 'one').first()
