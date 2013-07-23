@@ -21,7 +21,7 @@ def setup():
     DBSession.configure(bind=engine)
     Base.metadata.create_all(engine)
     with transaction.manager:
-        model = User(username='one', password='kdkdk', email='skdsk', id='kkk', pk='kk')
+        model = User(username='one', password='kdkdk', email='skdsk')
         DBSession.add(model)
 
 
@@ -54,8 +54,8 @@ def test_course():
 
 
 def test_course_class():
-    from timtec.models import CourseClass
-    course_class = CourseClass(name='Nome')
+    from timtec.models import Klass
+    course_class = Klass(name='Nome')
     assert course_class.name == 'Nome'
 
 
