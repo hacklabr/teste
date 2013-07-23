@@ -7,6 +7,7 @@ from sqlalchemy.ext.declarative import (
 from sqlalchemy.orm import (
     scoped_session,
     sessionmaker,
+    relationship,
 )
 from zope.sqlalchemy import ZopeTransactionExtension
 from horus.models import (
@@ -27,11 +28,10 @@ class BaseModel(object):
     }
 
     @declared_attr
-    def pk(self):
-        # We use pk instead of id because id is a python builtin
+    def id(self):
         return sa.Column(sa.Integer, primary_key=True)
 
-    _traversal_lookup_key = 'pk'
+    _traversal_lookup_key = 'id'
 
     @declared_attr
     def __tablename__(cls):
@@ -41,7 +41,7 @@ class BaseModel(object):
 
         return (
             name[0].lower() +
-            re.sub(r'([A-Z])', lambda m: "_" + m.group(0).lower(), name[1:])
+            re.sub(r'([A-Z])', lambda m: '_' + m.group(0).lower(), name[1:])
         )
 
 
@@ -65,23 +65,148 @@ class Activation(ActivationMixin, Base):
     pass
 
 
-class Video(Base):
+class Badge(Base):
     name = sa.Column(sa.Unicode(255), nullable=False)
+    users = relationship('UserBadge', backref='badges')
+
+
+class UserBadge(Base):
+    user_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(User.__tablename__)))
+    badge_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Badge.__tablename__)))
+
+
+class Video(Base):
+    name = sa.Column(sa.Unicode(255))
+    url = sa.Column(sa.Unicode(255))
+    accesses = relationship('AccessedVideo', backref='access_videos')
+
+
+class AccessedVideo(Base):
+    video_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Video.__tablename__)))
+    user_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(User.__tablename__)))
+    start = sa.Column(sa.DateTime())
+    stop = sa.Column(sa.DateTime())
+    position = sa.Column(sa.Integer())
 
 
 class Course(Base):
     """Course """
     name = sa.Column(sa.Unicode(255), nullable=False)
-    description = sa.Column(sa.Text(255))
-    knowledge_acquired = sa.Column(sa.Text(255))
-    knowledge_required = sa.Column(sa.Text(255))
-    professors = sa.Column(sa.Integer, sa.ForeignKey("{0}.pk".format(User.__tablename__)))
-    intro_video = sa.Column(sa.Integer, sa.ForeignKey("{0}.pk".format(Video.__tablename__)))
-    students = sa.Column(sa.Integer, sa.ForeignKey("{0}.pk".format(User.__tablename__)))
+    description = sa.Column(sa.UnicodeText())
+    knowledge_acquired = sa.Column(sa.UnicodeText())
+    knowledge_required = sa.Column(sa.UnicodeText())
+    professors = relationship('CourseProfessors', backref='teaching_courses')
+    intro_video_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Video.__tablename__)))
+    intro_video = relationship('Video')
+    students = relationship('CourseStudents', backref='courses')
 #     wiki
 #     forum
 #     notes
 
 
-class CourseClass(Base):
-    name = sa.Column(sa.Unicode(255), nullable=False)
+class CourseStudents(Base):
+    course_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Course.__tablename__)))
+    students_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(User.__tablename__)))
+    enrollment = sa.Column(sa.DateTime())
+
+
+class CourseProfessors(Base):
+    course_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Course.__tablename__)))
+    professors_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(User.__tablename__)))
+    start = sa.Column(sa.DateTime())
+
+
+class Klass(Base):
+    name = sa.Column(sa.Unicode(255))
+    course_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Course.__tablename__)))
+    videos = relationship('KlassVideo', backref='klasses')
+    students = relationship('KlassStudent', backref='klasses')
+    activities = relationship('KlassActivity')
+
+
+class KlassStudent(Base):
+    klass_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Klass.__tablename__)))
+    user_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(User.__tablename__)))
+    start = sa.Column(sa.DateTime())
+    end = sa.Column(sa.DateTime())
+    progress = sa.Column(sa.Integer())
+
+
+class KlassVideo(Base):
+    video_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Video.__tablename__)))
+    klass_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Klass.__tablename__)))
+    position = sa.Column(sa.Integer())
+
+
+class Note(Base):
+    text = sa.Column(sa.UnicodeText())
+    video_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Video.__tablename__)))
+    klass_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Klass.__tablename__)))
+    user_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(User.__tablename__)))
+
+
+class Access(Base):
+    user_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(User.__tablename__)))
+
+
+class Activity(Base):
+    title = sa.Column(sa.Unicode(255))
+    type = sa.Column(sa.String(50))
+    __mapper_args__ = {
+        'polymorphic_identity': 'activity',
+        'polymorphic_on': type
+    }
+
+
+class KlassActivity(Base):
+    activity_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Activity.__tablename__)))
+    klass_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Klass.__tablename__)))
+    position = sa.Column(sa.Integer())
+
+
+class MultipleChoice(Activity):
+    id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Activity.__tablename__)), primary_key=True)
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'multiple_choice',
+    }
+
+
+class TrueFalse(Activity):
+    id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Activity.__tablename__)), primary_key=True)
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'true_false',
+    }
+
+
+class SingleChoice(Activity):
+    id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Activity.__tablename__)), primary_key=True)
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'single_choice',
+    }
+
+
+class OrderActivity(Activity):
+    id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Activity.__tablename__)), primary_key=True)
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'order',
+    }
+
+
+class MultipleTrueFalse(Activity):
+    id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Activity.__tablename__)), primary_key=True)
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'multiple_true_false',
+    }
+
+
+class FreeText(Activity):
+    id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Activity.__tablename__)), primary_key=True)
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'free_text',
+    }

@@ -39,3 +39,7 @@ nosetests.xml
 .pydevproject
 
 .coveralls.yml
+
+# Virtualenvs
+env*
+
