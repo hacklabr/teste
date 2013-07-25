@@ -30,14 +30,6 @@ def teardown():
     testing.tearDown()
 
 
-def test_it():
-    from timtec.views import my_view
-    request = testing.DummyRequest()
-    info = my_view(request)
-    assert info['one'].username == 'one'
-    assert info['project'] == 'timtec'
-
-
 def test_app_creation():
     from paste.deploy.loadwsgi import appconfig
     from timtec import main
