@@ -12,6 +12,12 @@ here = os.path.dirname(__file__)
 settings = appconfig('config:' + os.path.join(here, '../', 'test.ini'))
 
 
+# def setup_module(module):
+#     engine = engine_from_config(settings, prefix='sqlalchemy.')
+#     DBSession.configure(bind=engine)
+#     Base.metadata.create_all(engine)
+
+
 class BaseModelTest():
     @classmethod
     def setup_class(cls):

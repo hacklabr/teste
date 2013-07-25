@@ -25,6 +25,14 @@ def main(global_config, **settings):
     config.add_route('index', '/')
     config.add_route('course_intro', '/{course}/intro/')
     config.add_route('klass', '/{course}/{klass}/')
+    config.include('horus')
+    config.include('pyramid_mailer')
+    # formalchemy
+    config.include('pyramid_formalchemy')
+    config.include('pyramid_fanstatic')
+    config.include('fa.jquery')
+    # register an admin UI
+    config.formalchemy_admin('/admin', package='timtec', view='fa.jquery.pyramid.ModelView')
     config.add_route('login', '/login')
     config.add_route('logout', '/logout')
     config.scan()

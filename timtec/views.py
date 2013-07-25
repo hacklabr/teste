@@ -7,10 +7,9 @@ from .models import (
 )
 
 
-@view_config(route_name='index')
+@view_config(route_name='index', renderer='templates/course_intro.pt')
 @view_config(route_name='course_intro', renderer='templates/course_intro.pt')
 def course_intro(request):
-
     # DBSession.query(Course).filter(Course.name == 'one').first()
     return {'name': 'timtec'}
 

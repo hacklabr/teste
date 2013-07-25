@@ -1,4 +1,7 @@
 Chameleon==2.11
+fa.jquery==0.9.5
+fanstatic==1.0a2
+FormAlchemy==1.4.3
 Mako==0.8.1
 MarkupSafe==0.18
 PasteDeploy==1.5.0
