@@ -43,3 +43,6 @@ nosetests.xml
 # Virtualenvs
 env*
 
+# OS Temp Files
+.DS_Store
+

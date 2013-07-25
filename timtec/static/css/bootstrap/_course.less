@@ -1,0 +1,521 @@
+@import "../../fonts/teuton/stylesheet.css";
+@import "../../fonts/bebas/stylesheet.css";
+
+
+// VARIABLES
+// ------------------------------------------------
+@timBlue:#22415c;
+@timBlueDark:#1b2e45;
+
+// Darker to lighter
+@timBlue1:rgb(7,47,230);
+@timBlue2:rgb(0,115,207);
+@timBlue3:rgb(44,156,211);
+@timBlue4:rgb(0,196,223);
+@timBlue5:rgb(196,217,228);
+
+@timYellow:rgb(254,209,0);
+@timOrange:rgb(227,114,34);
+@timGreen1:rgb(122,184,0);
+@timGreen2:rgb(190,214,0);
+@timGray:rgb(94,106,113);
+@timViolet:rgb(152,30,50);
+
+@btnCourseBackground:@timViolet - 40%;
+@btnCourseBackgroundHighlight:@timViolet + 20%;
+
+
+
+
+// MIXINS
+// ------------------------------------------------
+.bottom(@margin:0, @padding:0) {
+    margin-bottom:@margin;
+    padding-bottom:@padding;
+}
+
+.left(@margin:0, @padding:0) {
+    margin-left:@margin;
+    padding-left:@padding;
+}
+
+.right(@margin:0, @padding:0) {
+    margin-right:@margin;
+    padding-right:@padding;
+}
+
+.top(@margin:0, @padding:0) {
+    margin-top:@margin;
+    padding-top:@padding;
+}
+
+// Calculate width
+.calculate-width(@value:0) {
+    width:-moz-calc(~'100% - @{value}');
+    width:-webkit-calc(~'100% - @{value}');
+    width:calc(~'100% - @{value}');
+}
+
+// Vertcal align
+.vertical-align(@position) {
+    display:inline-block;
+    vertical-align:@position;
+}
+
+// Arrows
+.arrow-up(@width, @color) {
+	border-bottom:@width solid @color;
+	border-left:@width solid transparent;
+	border-right:@width solid transparent;	
+    .size(0,0);
+}
+.arrow-down(@width, @color) {
+	border-left:@width solid transparent;
+	border-right:@width solid transparent;
+	border-top:@width solid @color;
+    .size(0,0);
+}
+.arrow-right(@width, @color) {
+	border-bottom:@width solid transparent;
+	border-left:@width solid @color;
+	border-top:@width solid transparent;
+    .size(0,0);
+}
+.arrow-left(@width, @color) {
+	border-bottom:@width solid transparent; 	
+	border-right:@width solid @color; 
+	border-top:@width solid transparent;
+    .size(0,0);
+}
+
+
+
+// HELPERS
+// ------------------------------------------------
+.alignleft {
+    float:left;
+}
+.alignright {
+    float:right;
+}
+.textcenter {
+    text-align:center;
+}
+
+.textright {
+    text-align:right;
+}
+.bottom {
+    .bottom(0,0);
+}
+.left {
+    .left(0,0);
+}
+.right {
+    .right(0,0);
+}
+.top {
+    .top(0,0);
+}
+.no-bullet {
+    list-style:none;
+    .left(0,0)
+}
+.hidden {
+    display:none !important;
+}
+
+
+
+
+// BUTTONS
+// ------------------------------------------------
+.btn-mini {
+    font-weight:bold;
+    text-transform:uppercase;
+}
+
+.btn-tim {
+    font-family:"Teuton";
+    line-height:1;
+    text-transform:uppercase;
+}
+
+// Inverse appears as dark gray
+.btn-course {
+  .buttonBackground(@btnCourseBackgroundHighlight, @btnCourseBackground);
+}
+
+
+
+
+
+// FONT
+// ------------------------------------------------
+h1, h2, h3, h4, h5, h6 {
+    font-family:"Bebas";
+    font-weight:normal;
+    line-height:1;
+    text-shadow:none;
+}
+
+h1 {
+    .bottom(0,0);
+    .top(0,0);
+    color:@black;
+    font-size:36px;
+    text-transform:uppercase;
+}
+
+h2 {
+    .top(0,0);
+    color:@grayDark;
+    font-size:27px;
+}
+
+h3 {
+    .bottom(12px, 9px);
+    border-bottom:1px solid @grayLighter;
+    color:@timBlueDark;
+    font-size:27px;
+    text-transform:uppercase
+}
+
+h4 {
+    .top(0,0);
+    font-size:24px;
+}
+
+
+
+
+
+// COURSE INTRO PAGE
+// ------------------------------------------------
+#course-intro, #course-content {
+    
+    .bottom(36px, 26px);
+    
+    // LAYOUT
+    header#main-header {
+        .bottom(18px, 0);
+        .top(18px, 18px);
+    
+        border-bottom:1px solid @gray;
+    }
+    
+    li {
+        .bottom(9px,9px);
+        border-bottom:1px solid @grayLighter;
+
+        &:first-child {
+            .top(9px,9px);
+            border-top:1px solid @grayLighter;
+        }
+    }
+
+    .course-video {
+        .bottom(27px);
+    }
+    
+    .course-summary {
+        ul {
+            font-size:12px;
+
+            .title {
+                display:block;
+                font-weight:bold;
+                font-size:13px;
+            }
+        }
+    }
+
+    .course-instructors {
+        .top(27px);
+        
+        h4 {
+            .bottom(0,0);
+        }
+        
+        .job-title {
+            font-size:12px
+        }
+        
+        li:first-child {
+            border-top:none;
+        }
+    }
+
+    .course-nav {
+        text-align:right;
+        s
+        span {
+            border:1px solid @grayLighter;
+            .border-radius(3px);
+            display:inline-block;
+            .left(6px,0);
+            overflow:hidden;
+            position:relative;
+            .size(31px, 31px);
+            text-align:center;
+        }
+    }
+
+    .course-lessons {
+        
+        display:inline;
+        position:relative;
+        text-shadow:0 1px 0 @white;
+        z-index:10;
+        
+        .current-lesson {
+            .buttonBackground(@btnBackground, @btnBackgroundHighlight, @grayDark, 0 1px 1px rgba(255,255,255,.75));
+            .border-radius(3px);
+
+            border:1px solid @grayLighter;
+            cursor:pointer;
+            display:inline-block;
+            padding:6px 9px;
+            
+            &:hover {
+                .border-radius(3px 3px 0 0);
+            }
+
+            i {
+                .left(9px);
+            }
+        }
+        
+        .lessons {
+            .border-radius(0 3px 3px 3px);
+
+            background:@white;
+            display:none;
+            margin:0;
+            padding:0;
+            position:absolute;
+            text-align:left;
+            top:23px;
+            width:250px;
+
+            ul {
+                .border-radius(0 3px 3px 3px);
+                .bottom(0,0);
+
+                border:1px solid @grayLighter;
+                max-height:255px;
+                overflow:hidden;
+                position:relative;
+
+                li {
+                    border:none;
+                    margin:0;
+                    padding:6px 9px;
+                   
+                    &:hover {
+                        background-color:@grayLighter;
+                        cursor:pointer;
+                    }
+                    
+                    &.selected {
+                        color:@timGreen1;
+                    }
+                }
+            }
+        }
+        
+    }
+
+    .tracks {
+
+        .bottom(35px);
+        text-transform:uppercase;
+        
+        .track {
+            background:@grayLighter - 20%;
+            .box-shadow(inset -1px 0 0 @white);
+            cursor:pointer;
+            float:left;
+            position:relative;
+            .size(21px, 5%);
+            z-index:10;
+
+            &.watching, &.watching:hover {
+                background:@timBlue3;
+                .arrow:before {
+                    border-left-color:@timBlue3;
+                }
+            }
+        
+            &.done, &.done:hover {
+                background:@gray;
+                .arrow:before {
+                    border-left-color:@gray;
+                }
+            }
+
+            &:hover {
+
+                background:@grayLight;
+
+                .track-title {
+                    display:block;
+                }
+            }
+            
+            .track-title {
+                background:@white;
+                border:1px solid @grayLight;
+                .border-radius(3px);
+                display:none;
+                font-size:12px;
+                padding:3px 6px;
+                position:absolute;
+                text-align:left;
+                text-transform:none;
+                top:24px;
+                width:200px;
+            }
+            
+            i {
+                .left(5px);
+            }
+        }
+        
+    }
+    
+    .video {
+        .bottom(18px,18px);
+        
+        .subtitle {
+            font-size:12px;
+            height:482px;
+            overflow:auto;
+            position:relative;
+            
+            table {
+                .bottom(0);
+            }
+            
+            .selected {
+                font-weight:bold;
+            }
+            
+            i {
+                cursor:pointer;
+            }
+        }
+    }
+    
+    .course-forum {
+
+        form {
+            border-bottom:1px solid @grayLighter;
+        }
+
+        article {
+            
+            .bottom(18px, 18px);
+            border-bottom:1px solid @grayLighter;
+
+            &:before {
+                background:red;
+                content:'';
+                display:inline-block;
+                height:100%;
+                vertical-align:middle;
+                width:10px;
+            }
+            
+            .stats {
+                background-color:@grayLighter;
+                .border-radius(4px);
+                font-size:12px;
+                margin:4px 20px 0 -14px;
+                padding:9px 9px 0 9px;
+                position:relative;
+                text-align:center;
+                .vertical-align(top);
+                width:60px;
+
+                .numbers-votes, .numbers-answers {
+                    display:block;
+                    font-size:18px;
+                    line-height:1;
+                }
+                
+                .arrow-right {
+                    .arrow-right(12px, @grayLighter);
+                    position:absolute;
+                    right:-12px;
+                }
+            }
+
+            .question {
+                .calculate-width(102px);
+                font-size:14px;
+                font-weight:bold;
+                line-height:1.5;
+                .vertical-align(top);
+            }
+            
+            .description {
+                font-size:12px;
+                font-weight:normal;
+            }
+            
+            .author {
+                font-size:12px;
+                padding:3px 9px;
+                text-align:right;
+            }
+            
+            .rating {
+                .left(-14px);
+                .right(10px);
+                .vertical-align(middle);
+                width:40px;
+                
+                .arrow-up(14px, @graypLight) {
+                    margin:0 auto;
+                    &:hover {
+                        border-bottom-color:@timGreen1;
+                        cursor:pointer;
+                    }
+                }
+                .arrow-down(14px, @graypLight) {
+                    margin:0 auto;
+                    .size(0,0);
+                    &:hover {
+                       border-top-color:@timGreen1;
+                       cursor:pointer;
+                    }
+                }
+                .votes {
+                    font-size:18px;
+                    margin:6px 0;
+                    text-align:center;
+                }
+            }
+        }
+
+        footer {
+            font-size:11px;
+            text-align:center;
+            text-transform:uppercase;
+        }
+    }
+    
+    .course-instructions {
+        font-size:12px;
+    }
+}
+
+
+
+.footer {
+    .bottom(0,18px);
+    .top(27px,18px);
+
+    background-color:@grayLighter;
+}
