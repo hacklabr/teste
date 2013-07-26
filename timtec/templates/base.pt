@@ -47,5 +47,40 @@
 
     <!-- CONTAINER -->
     <metal:content define-slot="container" />
+    <!-- END CONTAINER -->
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <div class="container">
+            <div class="row-fluid">
+                <div class="span3">
+                    <ul class="no-bullet">
+                        <li><a href="">Sobre</a></li>
+                        <li><a href="">Equipe</a></li>
+                        <li><a href="">Imprensa</a></li>
+                        <li><a href="">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="span3">
+                    <ul class="no-bullet">
+                        <li><a href="">Blog</a></li>
+                        <li><a href="">Ajuda</a></li>
+                        <li><a href="">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="span3">
+                    <ul class="no-bullet">
+                        <li><a href="">Política de Uso</a></li>
+                        <li><a href="">Política de Privacidade</a></li>
+                    </ul>
+                </div>
+                <div class="span3">
+                    Coluna 4
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END FOOTER -->
+
 </body>
 </html>

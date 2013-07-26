@@ -1,5 +1,148 @@
 <metal:main use-macro="load: base.pt">
 <div id="course-intro" class="container" metal:fill-slot="container">
+    <!-- CONTAINER -->
+    <div id="course-intro" class="container">
+
+        <!-- Header -->
+        <header id="main-header" class="row-fluid clearfix">
+            <div class="span12">
+                <h1>${course.name}</h1>
+                <h2>${course.description}</h2>
+            </div>
+        </header>
+        <!-- END Header -->
+
+        <!-- Main Content -->
+        <div class="row-fluid">
+            
+            <div class="span9">
+                <section class="row-fluid course-video">
+                    <iframe class="span12 img-polaroid" height="593" src="http://www.youtube.com/embed/VZvgj6B2JZs" frameborder="0" allowfullscreen></iframe>
+                </section>
+
+                <section class="row-fluid course-info">
+                    <div class="span6">
+                        <h3>O que vou aprender?</h3>
+                        <p>${course.knowledge_acquired}</p>
+                    </div>
+                    <div class="span6">
+                        <h3>O que preciso saber?</h3>
+                        <p>${course.knowledge_required}</p>
+                    </div>
+                </section>
+                
+                <section class="row-fluid course-instructors">
+                    <h3>Professores</h3>
+                    <ul class="no-bullet">
+                        <li class="row-fluid" tal:repeat="professor course.professors">
+                            <div class="span3">
+                                <img src="https://lh3.ggpht.com/iHRPf9Skk9RiWPmdIxmAP8RDFAE02gTfYypIek11APyUWCFp1Daw3W6YQu8zRYUr9_Kye0BpDnzcHl1M18I=s405" class="span12 img-polaroid">
+                            </div>
+                            <div class="span9">
+                                <h4>${professor.user.name}</h4>
+                                <p class="job-title">Instructor</p>
+                                <p>${professor.biography}</p>
+                            </div>
+                        </li>
+                        <li class="row-fluid">
+                            <div class="span3">
+                                <img src="https://lh5.ggpht.com/E_iSXIn7v-6ywaaX4561UDqbvNd-pmKlezwfXpAqZolU9IA4t-2LZH7N1_WDZ7EiW24yuLhJ_pIFO3BwDLE=s405" class="span12 img-polaroid">
+                            </div>
+                            <div class="span9">
+                                <h4>Kathleen Mullaney</h4>
+                                <p class="job-title">Course Developer</p>
+                                <p>Kathleen manages content development at Udacity. EP245 is the first class for which she is working as the official Assistant Instructor. She's learned a lot from Steve while producing his class and hopes to help students with the course in any way she can!</p>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+
+            <div class="span3">
+                <section class="course-summary">
+                    <h3 class="top">Resumo</h3>
+                    <p>Learn the key tools and steps to build a successful startup (or at least reduce the risk of failure). An introduction to the basics of Steve Blank's famous Customer Development process, where entrepreneurs "get out of the building" to gather massive amounts of customer and marketplace feedback, and then use that feedback to continuously iterate and evolve their startup business models, improving the chances of success at every step.</p>
+                    <p>
+                        <strong><i class="icon-time"></i> Tempo estimado:</strong> 1 mês
+                        <br/>
+                        <strong><i class="icon-tasks"></i> Dedicação extra:</strong> 40 horas
+                    </p>
+                    <ul class="no-bullet">
+                        <li class="clearfix"><a href="aula.html" class="btn btn-large btn-course btn-tim span12">Começar o curso</a></li>
+                        <li>
+                            <span class="title">Lesson 1: What We Now Know</span>
+                            Why startups are not smaller versions of large companies
+                        </li>
+                        <li>
+                            <span class="title">Lesson 2: Business Models and Customer Development</span>
+                            How to articulate and test hypotheses
+                        </li>
+                        <li>
+                            <span class="title">Lesson 3: Value Proposition</span>
+                            How do you find your minimum viable product?
+                        </li>
+                        <li>
+                            <span class="title">Lesson 4: Customer Segments</span>
+                            How do you find your customer archetype?
+                        </li>
+                        <li>
+                            <span class="title">Lesson 5: Channels</span>
+                            How does your product gets to customers?
+                        </li>
+                        <li>
+                            <span class="title">Lesson 6: Customer Relations</span>
+                            How do you get, keep and grow customers?
+                        </li>
+                        <li>
+                            <span class="title">Lesson 7: Revenue Models</span>
+                            How do you make your money?
+                        </li>
+                        <li>
+                            <span class="title">Lesson 8: Partners</span>
+                            Who are your partners and suppliers?
+                        </li>
+                        <li>
+                            <span class="title">Lesson 9: Resources, Activities and Costs</span>
+                            What is most important for the business?
+                        </li>
+                    </ul>
+                </section>
+                
+                <section class="social" style="position:relative;overflow:hidden;">
+                    <h3>Compartilhe</h3>
+                    <div id="fb-root"></div>
+                    <script>(function(d, s, id) {
+                      var js, fjs = d.getElementsByTagName(s)[0];
+                      if (d.getElementById(id)) return;
+                      js = d.createElement(s); js.id = id;
+                      js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=479780832071303";
+                      fjs.parentNode.insertBefore(js, fjs);
+                    }(document, 'script', 'facebook-jssdk'));</script>
+                    
+                    <p class="fb-like-box" data-href="https://www.facebook.com/FacebookDevelopers" data-width="270" data-show-faces="true" data-stream="false" data-show-border="true" data-header="true"></p>
+
+                    <p><a href="https://twitter.com/share" class="twitter-share-button">Tweet</a></p>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+                    <!-- Place this tag where you want the share button to render. -->
+                    <div class="g-plus" data-action="share"></div>
+
+                    <!-- Place this tag after the last share tag. -->
+                    <script type="text/javascript">
+                      (function() {
+                        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                        po.src = 'https://apis.google.com/js/plusone.js';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                      })();
+                    </script>
+                </section>
+            </div>
+        </div>
+        <!-- END Main Content -->
+    </div>
+    <!-- CONTAINER -->
+    
+    
     <img src="${request.static_url('timtec:static/img/pyramid.png')}" width="750" height="169" alt="pyramid"/>
     <p>
         Welcome to <span>${name}</span>, an application generated by<br/> the Pyramid web application development framework.

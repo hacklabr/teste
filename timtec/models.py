@@ -50,7 +50,7 @@ Base = declarative_base(cls=BaseModel)
 
 
 class User(UserMixin, Base):
-    pass
+    name = sa.Column(sa.Unicode(255))
 
 
 class Group(GroupMixin, Base):
@@ -77,7 +77,7 @@ class UserBadge(Base):
 
 class Video(Base):
     name = sa.Column(sa.Unicode(255))
-    url = sa.Column(sa.Unicode(255))
+    youtube_id = sa.Column(sa.Unicode(255))
     accesses = relationship('AccessedVideo', backref='access_videos')
 
 
@@ -91,14 +91,28 @@ class AccessedVideo(Base):
 
 class Course(Base):
     """Course """
-    name = sa.Column(sa.Unicode(255), nullable=False)
+    slug = sa.Column(sa.Unicode(255), nullable=False)
+    name = sa.Column(sa.Unicode(255))
     description = sa.Column(sa.UnicodeText())
+    abstract = sa.Column(sa.UnicodeText())
     knowledge_acquired = sa.Column(sa.UnicodeText())
     knowledge_required = sa.Column(sa.UnicodeText())
-    professors = relationship('CourseProfessors', backref='teaching_courses')
+    professors = relationship('CourseProfessors', backref='course')
     intro_video_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Video.__tablename__)))
     intro_video = relationship('Video')
     students = relationship('CourseStudents', backref='courses')
+    status = sa.Column(sa.Unicode(255))
+    # discutir com anderson como vai ser o tempo estimado
+    time_estimated = sa.Column(sa.Unicode(255))
+    extra_dadication = sa.Column(sa.Unicode(255))
+
+    def __unicode__(self):
+        """This is used to render the model in a relation field. Must return an
+        unicode string."""
+        return self.name
+
+    def __repr__(self):
+        return '<Curso {0}>'.format(self.nama)
 #     wiki
 #     forum
 #     notes
@@ -113,12 +127,17 @@ class CourseStudents(Base):
 class CourseProfessors(Base):
     course_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Course.__tablename__)))
     professors_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(User.__tablename__)))
+    user = relationship('User', backref='course')
     start = sa.Column(sa.DateTime())
+    biography = sa.Column(sa.UnicodeText())
+    # couse role
 
 
 class Klass(Base):
     name = sa.Column(sa.Unicode(255))
+    desc = sa.Column(sa.Unicode(255))
     course_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Course.__tablename__)))
+    course = relationship('Course', backref='klasses')
     videos = relationship('KlassVideo', backref='klasses')
     students = relationship('KlassStudent', backref='klasses')
     activities = relationship('KlassActivity')
