@@ -68,9 +68,9 @@ class TestViews(BaseTestCase):
     def test_course_intro(self):
         from timtec.views import CourseController
         from timtec.models import (
-           Course,
-           CourseProfessors,
-           User,
+            Course,
+            CourseProfessors,
+            User,
         )
         course = Course()
         course.slug = u'dbsql'
@@ -103,10 +103,10 @@ class TestViews(BaseTestCase):
     def test_lesson(self):
         from timtec.views import CourseController
         from timtec.models import (
-           Course,
-           CourseProfessors,
-           User,
-           Lesson,
+            Course,
+            CourseProfessors,
+            User,
+            Lesson,
         )
         course = Course()
         course.slug = u'dbsql'
@@ -129,7 +129,7 @@ class TestViews(BaseTestCase):
         DBSession.add(course)
 
         lessons = [
-           (u'Apresentando: Bancos de Dados', u'Para que servem os bancos de dados'),
+            (u'Apresentando: Bancos de Dados', u'Para que servem os bancos de dados'),
 #            (u'Programas para operar bancos de dados', u'Software para bancos de dados'),
 #            (u'O que é SQL', u'Ésse-quê-éle'),
 #            (u'Organizando os dados', u'Organizando os dados'),
