@@ -93,6 +93,7 @@ class TestViews(BaseTestCase):
         DBSession.add(course)
 
         request = testing.DummyRequest()
+        request.matchdict['course'] = u'dbsql'
         course_controller = CourseController(request)
         response = course_controller.intro()
         assert response['course'] == course

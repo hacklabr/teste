@@ -15,11 +15,10 @@ class BaseView(object):
 class CourseController(BaseView):
     @view_config(route_name='index', renderer='templates/course_intro.pt')
     @view_config(route_name='course_intro', renderer='templates/course_intro.pt')
-    def intro(self, course_slug=u'dbsql'):
-        course = DBSession.query(Course).options(joinedload(Course.professors)).filter(Course.slug == course_slug).first()
-        return {
-            u'name': u'timtec',
-            u'course': course}
+    def intro(self):
+        course_slug = self.request.matchdict.get('course')
+        course = DBSession.query(Course).filter(Course.slug == course_slug).first()
+        return {u'course': course}
 
 # @view_config(route_name='index', renderer='templates/course_intro.pt')
 # @view_config(route_name='course_intro', renderer='templates/course_intro.pt')
