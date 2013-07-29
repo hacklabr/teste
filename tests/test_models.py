@@ -14,12 +14,6 @@ here = os.path.dirname(__file__)
 settings = appconfig('config:' + os.path.join(here, '../', 'test.ini'))
 
 
-# def setup_module(module):
-#     engine = engine_from_config(settings, prefix='sqlalchemy.')
-#     DBSession.configure(bind=engine)
-#     Base.metadata.create_all(engine)
-
-
 class BaseTestCase():
     @classmethod
     def setup_class(cls):
@@ -37,7 +31,6 @@ class BaseTestCase():
         DBSession.configure(bind=connection)
         self.session = self.Session(bind=connection)
         Base.session = self.session
-#         Base.metadata.create_all(connection)
 
     def teardown_method(self, method):
         # rollback - everything that happened with the
@@ -60,11 +53,6 @@ class TestVideo(BaseTestCase):
 
 
 class TestViews(BaseTestCase):
-
-#     def setup_method(self, method):
-#         self.config = testing.setUp(request=testing.DummyRequest())
-#         super(TestViews, self).setup_method()
-
     def test_course_intro(self):
         from timtec.views import CourseController
         from timtec.models import (
@@ -128,20 +116,11 @@ class TestViews(BaseTestCase):
         course.professors.append(course_professors)
         DBSession.add(course)
 
-        lessons = [
-            (u'Apresentando: Bancos de Dados', u'Para que servem os bancos de dados'),
-#            (u'Programas para operar bancos de dados', u'Software para bancos de dados'),
-#            (u'O que é SQL', u'Ésse-quê-éle'),
-#            (u'Organizando os dados', u'Organizando os dados'),
-#            (u'Instalar e testar o SQLite', u'Instalar os programas para praticar'),
-        ]
-
-        for lesson_title, lesson_desc in lessons:
-            lesson = Lesson()
-            lesson.name = lesson_title
-            lesson.desc = lesson_desc
-            course.lessons.append(lesson)
-            DBSession.add(lesson)
+        lesson = Lesson()
+        lesson.name = u'Apresentando: Bancos de Dados'
+        lesson.desc = u'Para que servem os bancos de dados'
+        course.lessons.append(lesson)
+        DBSession.add(lesson)
 
         request = testing.DummyRequest()
         request.matchdict['course'] = u'dbsql'
