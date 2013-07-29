@@ -130,3 +130,19 @@ class TestViews(BaseTestCase):
 
         assert response['lesson'] == lesson
         assert response['lesson'].course == course
+
+    def test_index(self):
+        from timtec.views import CourseController
+        from timtec.models import (
+            Course,
+        )
+
+        course = Course()
+        course.slug = u'dbsql'
+        DBSession.add(course)
+
+        request = testing.DummyRequest()
+        course_controller = CourseController(request)
+        response = course_controller.intro()
+
+        assert response['course'] == course

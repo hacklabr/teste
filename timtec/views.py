@@ -17,13 +17,13 @@ class CourseController(BaseView):
     @view_config(route_name='index', renderer='templates/course_intro.pt')
     @view_config(route_name='course_intro', renderer='templates/course_intro.pt')
     def intro(self):
-        course_slug = self.request.matchdict.get('course')
+        course_slug = self.request.matchdict.get('course', 'dbsql')
         course = DBSession.query(Course).filter(Course.slug == course_slug).first()
         return {u'course': course}
 
     @view_config(route_name='lesson', renderer='templates/lesson.pt')
     def lesson(self, course_slug=u'dbsql'):
-        course_slug = self.request.matchdict.get('course')
-        lesson_name = self.request.matchdict.get('lesson')
+        course_slug = self.request.matchdict['course']
+        lesson_name = self.request.matchdict['lesson']
         lesson = DBSession.query(Lesson).join(Course).filter(Lesson.name == lesson_name).filter(Course.slug == course_slug).first()
         return {u'lesson': lesson}
