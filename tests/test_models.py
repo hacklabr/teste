@@ -99,3 +99,55 @@ class TestViews(BaseTestCase):
         assert response['course'] == course
         assert response['course'].professors[0] == course_professors
         assert response['course'].professors[0].user == user
+
+    def test_lesson(self):
+        from timtec.views import CourseController
+        from timtec.models import (
+           Course,
+           CourseProfessors,
+           User,
+           Klass,
+        )
+        course = Course()
+        course.slug = u'dbsql'
+        course.name = u'Banco de Dados e SQL'
+        course.description = u'Introdução a Bancos de Dados e Linguagem SQL'
+
+        user = User(username='ramalho', password='kdkdk', email='skdsk@vcx')
+        user.name = u'Luciano Ramalho'
+        course_professors = CourseProfessors()
+        course_professors.user = user
+        course_professors.biography = (
+            u'Mussum ipsum cacilds, vidis litro abertis. Consetis'
+            u'adipiscings elitis. Pra lá , depois divoltis porris,'
+            u'paradis. Paisis, filhis, espiritis santis. Mé faiz elementum'
+            u' girarzis, nisi eros vermeio, in elementis mé pra quem é'
+            u'amistosis quis leo. Manduma pindureta quium dia nois paga.'
+            u'bolis eu num gostis.'
+        )
+        course.professors.append(course_professors)
+        DBSession.add(course)
+
+        klasses = [
+           (u'Apresentando: Bancos de Dados', u'Para que servem os bancos de dados'),
+#            (u'Programas para operar bancos de dados', u'Software para bancos de dados'),
+#            (u'O que é SQL', u'Ésse-quê-éle'),
+#            (u'Organizando os dados', u'Organizando os dados'),
+#            (u'Instalar e testar o SQLite', u'Instalar os programas para praticar'),
+        ]
+
+        for klass_title, klass_desc in klasses:
+            klass = Klass()
+            klass.name = klass_title
+            klass.desc = klass_desc
+            course.klasses.append(klass)
+            DBSession.add(klass)
+
+        request = testing.DummyRequest()
+        request.matchdict['course'] = u'dbsql'
+        request.matchdict['lesson'] = u'Apresentando: Bancos de Dados'
+        course_controller = CourseController(request)
+        response = course_controller.lesson()
+
+        assert response['lesson'] == klass
+        assert response['lesson'].course == course

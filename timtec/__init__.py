@@ -23,8 +23,8 @@ def main(global_config, **settings):
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.scan_horus(models)
     config.add_route('index', '/')
-    config.add_route('course_intro', '/{course}/intro/')
-    config.add_route('klass', '/{course}/{klass}/')
+    config.add_route('course_intro', '/{course}/intro')
+    config.add_route('lesson', '/{course}/{lesson}/')
     config.include('horus')
     config.include('pyramid_mailer')
     # formalchemy

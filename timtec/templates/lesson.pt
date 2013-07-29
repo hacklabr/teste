@@ -1,0 +1,5 @@
+<metal:main use-macro="load: base.pt">
+<div id="course-intro" class="container" metal:fill-slot="container">
+${lesson.name}
+</div>
+</metal:main>
