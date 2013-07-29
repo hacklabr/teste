@@ -1,6 +1,4 @@
-from pyramid.response import Response
 from pyramid.view import view_config
-from sqlalchemy.orm import joinedload
 from .models import (
     DBSession,
     Course,
