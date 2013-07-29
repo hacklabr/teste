@@ -112,7 +112,7 @@ class Course(Base):
         return self.name
 
     def __repr__(self):
-        return '<Curso {0}>'.format(self.nama)
+        return '<Curso {0}>'.format(self.name)
 #     wiki
 #     forum
 #     notes
@@ -125,8 +125,8 @@ class CourseStudents(Base):
 
 
 class CourseProfessors(Base):
-    course_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Course.__tablename__)))
-    professors_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(User.__tablename__)))
+    course_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Course.__tablename__)), nullable=False)
+    user_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(User.__tablename__)), nullable=False)
     user = relationship('User', backref='course')
     start = sa.Column(sa.DateTime())
     biography = sa.Column(sa.UnicodeText())

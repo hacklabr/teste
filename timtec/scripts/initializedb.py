@@ -83,16 +83,18 @@ def initial_dev_data():
             klass.name = klass_title
             klass.desc = klass_desc
             course.klasses.append(klass)
-#             DBSession.add(klass)
+            DBSession.add(klass)
 
         user1 = User(username='ramalho', password='kdkdk', email='skdsk@vcx')
         user1.name = u'Luciano Ramalho'
         professor2 = User(username='Lucia', password='kdkdk', email='skdsk@asdf')
         professor2.name = u'Lucia Silva'
+        DBSession.add(user1)
+        DBSession.add(professor2)
 
-        course_professors = CourseProfessors()
-        course_professors.user = user1
-        course_professors.biography = (
+        course_professor = CourseProfessors()
+        course_professor.user = user1
+        course_professor.biography = (
             u'Mussum ipsum cacilds, vidis litro abertis. Consetis'
             u'adipiscings elitis. Pra lá , depois divoltis porris,'
             u'paradis. Paisis, filhis, espiritis santis. Mé faiz elementum'
@@ -100,13 +102,15 @@ def initial_dev_data():
             u'amistosis quis leo. Manduma pindureta quium dia nois paga.'
             u'bolis eu num gostis.'
         )
-        course.professors.append(course_professors)
+        DBSession.add(course_professor)
+        course.professors.append(course_professor)
 
         course_professors2 = CourseProfessors()
-        course_professors2.professor = professor2
+        course_professors2.user = professor2
         course.professors.append(course_professors2)
-        DBSession.add(course)
+        DBSession.add(course_professors2)
 
+        DBSession.add(course)
 
 def main(argv=sys.argv):
     if len(argv) != 2:
