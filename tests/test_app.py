@@ -46,8 +46,8 @@ def test_course():
 
 
 def test_course_class():
-    from timtec.models import Klass
-    course_class = Klass(name='Nome')
+    from timtec.models import Lesson
+    course_class = Lesson(name='Nome')
     assert course_class.name == 'Nome'
 
 

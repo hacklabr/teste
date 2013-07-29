@@ -58,7 +58,7 @@
                     </p>
                     <ul class="no-bullet">
                         <li class="clearfix"><a href="aula.html" class="btn btn-large btn-course btn-tim span12">Começar o curso</a></li>
-                        <li tal:repeat="lesson course.klasses">
+                        <li tal:repeat="lesson course.lessons">
                             <span class="title">${lesson.name}</span>
                             ${lesson.desc}
                         </li>

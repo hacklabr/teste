@@ -106,7 +106,7 @@ class TestViews(BaseTestCase):
            Course,
            CourseProfessors,
            User,
-           Klass,
+           Lesson,
         )
         course = Course()
         course.slug = u'dbsql'
@@ -128,7 +128,7 @@ class TestViews(BaseTestCase):
         course.professors.append(course_professors)
         DBSession.add(course)
 
-        klasses = [
+        lessons = [
            (u'Apresentando: Bancos de Dados', u'Para que servem os bancos de dados'),
 #            (u'Programas para operar bancos de dados', u'Software para bancos de dados'),
 #            (u'O que é SQL', u'Ésse-quê-éle'),
@@ -136,12 +136,12 @@ class TestViews(BaseTestCase):
 #            (u'Instalar e testar o SQLite', u'Instalar os programas para praticar'),
         ]
 
-        for klass_title, klass_desc in klasses:
-            klass = Klass()
-            klass.name = klass_title
-            klass.desc = klass_desc
-            course.klasses.append(klass)
-            DBSession.add(klass)
+        for lesson_title, lesson_desc in lessons:
+            lesson = Lesson()
+            lesson.name = lesson_title
+            lesson.desc = lesson_desc
+            course.lessons.append(lesson)
+            DBSession.add(lesson)
 
         request = testing.DummyRequest()
         request.matchdict['course'] = u'dbsql'
@@ -149,5 +149,5 @@ class TestViews(BaseTestCase):
         course_controller = CourseController(request)
         response = course_controller.lesson()
 
-        assert response['lesson'] == klass
+        assert response['lesson'] == lesson
         assert response['lesson'].course == course

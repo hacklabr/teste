@@ -28,7 +28,7 @@ def initial_dev_data():
     from ..models import (
         User,
         Course,
-        Klass,
+        Lesson,
         CourseProfessors,
     )
     with transaction.manager:
@@ -70,7 +70,7 @@ def initial_dev_data():
         course.time_estimated = u'1 mês'
         course.extra_dadication = u'40 horas'
 
-        klasses = [
+        lessons = [
            (u'Apresentando: Bancos de Dados', u'Para que servem os bancos de dados'),
            (u'Programas para operar bancos de dados', u'Software para bancos de dados'),
            (u'O que é SQL', u'Ésse-quê-éle'),
@@ -78,12 +78,12 @@ def initial_dev_data():
            (u'Instalar e testar o SQLite', u'Instalar os programas para praticar'),
         ]
 
-        for klass_title, klass_desc in klasses:
-            klass = Klass()
-            klass.name = klass_title
-            klass.desc = klass_desc
-            course.klasses.append(klass)
-            DBSession.add(klass)
+        for lesson_title, lesson_desc in lessons:
+            lesson = Lesson()
+            lesson.name = lesson_title
+            lesson.desc = lesson_desc
+            course.lessons.append(lesson)
+            DBSession.add(lesson)
 
         user1 = User(username='ramalho', password='kdkdk', email='skdsk@vcx')
         user1.name = u'Luciano Ramalho'

@@ -4,7 +4,7 @@ from sqlalchemy.orm import joinedload
 from .models import (
     DBSession,
     Course,
-    Klass,
+    Lesson,
 )
 
 
@@ -25,5 +25,5 @@ class CourseController(BaseView):
     def lesson(self, course_slug=u'dbsql'):
         course_slug = self.request.matchdict.get('course')
         lesson_name = self.request.matchdict.get('lesson')
-        lesson = DBSession.query(Klass).join(Course).filter(Klass.name == lesson_name).filter(Course.slug == course_slug).first()
+        lesson = DBSession.query(Lesson).join(Course).filter(Lesson.name == lesson_name).filter(Course.slug == course_slug).first()
         return {u'lesson': lesson}

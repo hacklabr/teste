@@ -133,34 +133,34 @@ class CourseProfessors(Base):
     # couse role
 
 
-class Klass(Base):
+class Lesson(Base):
     name = sa.Column(sa.Unicode(255))
     desc = sa.Column(sa.Unicode(255))
     course_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Course.__tablename__)))
-    course = relationship('Course', backref='klasses')
-    videos = relationship('KlassVideo', backref='klasses')
-    students = relationship('KlassStudent', backref='klasses')
-    activities = relationship('KlassActivity')
+    course = relationship('Course', backref='lessons')
+    videos = relationship('LessonVideo', backref='lessons')
+    students = relationship('LessonStudent', backref='lessons')
+    activities = relationship('LessonActivity')
 
 
-class KlassStudent(Base):
-    klass_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Klass.__tablename__)))
+class LessonStudent(Base):
+    lesson_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Lesson.__tablename__)))
     user_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(User.__tablename__)))
     start = sa.Column(sa.DateTime())
     end = sa.Column(sa.DateTime())
     progress = sa.Column(sa.Integer())
 
 
-class KlassVideo(Base):
+class LessonVideo(Base):
     video_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Video.__tablename__)))
-    klass_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Klass.__tablename__)))
+    lesson_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Lesson.__tablename__)))
     position = sa.Column(sa.Integer())
 
 
 class Note(Base):
     text = sa.Column(sa.UnicodeText())
     video_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Video.__tablename__)))
-    klass_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Klass.__tablename__)))
+    lesson_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Lesson.__tablename__)))
     user_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(User.__tablename__)))
 
 
@@ -177,9 +177,9 @@ class Activity(Base):
     }
 
 
-class KlassActivity(Base):
+class LessonActivity(Base):
     activity_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Activity.__tablename__)))
-    klass_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Klass.__tablename__)))
+    lesson_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Lesson.__tablename__)))
     position = sa.Column(sa.Integer())
 
 
