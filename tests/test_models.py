@@ -2,43 +2,42 @@
 
 from pyramid import testing
 from paste.deploy.loadwsgi import appconfig
-
+import mock
 from sqlalchemy import engine_from_config
 from sqlalchemy.orm import sessionmaker
 from timtec.models import (
-    DBSession,
     Base,
 )
 import os
 here = os.path.dirname(__file__)
 settings = appconfig('config:' + os.path.join(here, '../', 'test.ini'))
 
+engine = None
+Session = None
+
+
+def setup_module(module):
+    global engine, Session
+    engine = engine_from_config(settings, prefix='sqlalchemy.')
+    Session = sessionmaker(bind=engine)
+    Base.metadata.create_all(engine)
+
 
 class BaseTestCase():
-    @classmethod
-    def setup_class(cls):
-        cls.engine = engine_from_config(settings, prefix='sqlalchemy.')
-        cls.Session = sessionmaker()
-        Base.metadata.create_all(cls.engine)
-
     def setup_method(self, method):
-        connection = self.engine.connect()
-
-        # begin a non-ORM transaction
-        self.trans = connection.begin()
-
-        # bind an individual Session to the connection
-        DBSession.configure(bind=connection)
-        self.session = self.Session(bind=connection)
+        testing.setUp()
+        self.session = Session(bind=engine)
         Base.session = self.session
+        self.patcher = mock.patch('timtec.views.DBSession', self.session)
+        self.patcher.start()
 
     def teardown_method(self, method):
-        # rollback - everything that happened with the
-        # Session above (including calls to commit())
-        # is rolled back.
+        self.session.rollback()
+        try:
+            self.patcher.stop()
+        except:
+            pass
         testing.tearDown()
-        self.trans.rollback()
-        self.session.close()
 
 
 class TestVideo(BaseTestCase):
@@ -46,7 +45,7 @@ class TestVideo(BaseTestCase):
         from timtec.models import Video
         video = Video(name='Video de teste', youtube_id='http://timtec.com.br')
         self.session.add(video)
-        self.session.commit()
+        #transaction.commit()
         query = self.session.query(Video.name).filter_by(name='Video de teste')
         name = query.all()[0][0]
         assert video.name == name
@@ -78,7 +77,7 @@ class TestViews(BaseTestCase):
             u'bolis eu num gostis.'
         )
         course.professors.append(course_professors)
-        DBSession.add(course)
+        self.session.add(course)
 
         request = testing.DummyRequest()
         request.matchdict['course'] = u'dbsql'
@@ -114,13 +113,13 @@ class TestViews(BaseTestCase):
             u'bolis eu num gostis.'
         )
         course.professors.append(course_professors)
-        DBSession.add(course)
+        self.session.add(course)
 
         lesson = Lesson()
         lesson.name = u'Apresentando: Bancos de Dados'
         lesson.desc = u'Para que servem os bancos de dados'
         course.lessons.append(lesson)
-        DBSession.add(lesson)
+        self.session.add(lesson)
 
         request = testing.DummyRequest()
         request.matchdict['course'] = u'dbsql'
@@ -139,7 +138,7 @@ class TestViews(BaseTestCase):
 
         course = Course()
         course.slug = u'dbsql'
-        DBSession.add(course)
+        self.session.add(course)
 
         request = testing.DummyRequest()
         course_controller = CourseController(request)
