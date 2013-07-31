@@ -79,6 +79,7 @@ class Video(Base):
     name = sa.Column(sa.Unicode(255))
     youtube_id = sa.Column(sa.Unicode(255))
     accesses = relationship('AccessedVideo', backref='access_videos')
+    block = relationship('Block', uselist=False)
 
 
 class AccessedVideo(Base):
@@ -138,9 +139,8 @@ class Lesson(Base):
     desc = sa.Column(sa.Unicode(255))
     course_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Course.__tablename__)))
     course = relationship('Course', backref='lessons')
-    videos = relationship('LessonVideo', backref='lessons')
     students = relationship('LessonStudent', backref='lessons')
-    activities = relationship('LessonActivity')
+    blocks = relationship('Block', secondary='lesson_block')
 
 
 class LessonStudent(Base):
@@ -149,12 +149,6 @@ class LessonStudent(Base):
     start = sa.Column(sa.DateTime())
     end = sa.Column(sa.DateTime())
     progress = sa.Column(sa.Integer())
-
-
-class LessonVideo(Base):
-    video_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Video.__tablename__)))
-    lesson_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Lesson.__tablename__)))
-    position = sa.Column(sa.Integer())
 
 
 class Note(Base):
@@ -170,17 +164,27 @@ class Access(Base):
 
 class Activity(Base):
     title = sa.Column(sa.Unicode(255))
-    type = sa.Column(sa.String(50))
+    type = sa.Column(sa.String(255))
+    block = relationship('Block', uselist=False)
     __mapper_args__ = {
         'polymorphic_identity': 'activity',
         'polymorphic_on': type
     }
 
 
-class LessonActivity(Base):
+class Block(Base):
     activity_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Activity.__tablename__)))
-    lesson_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Lesson.__tablename__)))
+    activity = relationship('Activity', uselist=False)
+    video_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Video.__tablename__)))
+    video = relationship('Video', uselist=False)
+    lessons = relationship('Lesson', secondary='lesson_block')
     position = sa.Column(sa.Integer())
+
+
+lesson_block = sa.Table('lesson_block', Base.metadata,
+    sa.Column(u'lesson_id', sa.Integer, sa.ForeignKey('{0}.id'.format(Lesson.__tablename__))),
+    sa.Column(u'block_id', sa.Integer, sa.ForeignKey('{0}.id'.format(Block.__tablename__)))
+)
 
 
 class MultipleChoice(Activity):
