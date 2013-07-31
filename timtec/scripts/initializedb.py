@@ -30,6 +30,10 @@ def initial_dev_data():
         Course,
         Lesson,
         CourseProfessors,
+        MultipleChoice,
+        SingleChoice,
+        Video,
+        Block,
     )
     with transaction.manager:
         course = Course()
@@ -69,6 +73,12 @@ def initial_dev_data():
         )
         course.time_estimated = u'1 mês'
         course.extra_dadication = u'40 horas'
+
+        lesson1 = Lesson()
+        lesson1.name = u'Apresentando: Bancos de Dados'
+        lesson1.desc = u'Para que servem os bancos de dados'
+        course.lessons.append(lesson1)
+        DBSession.add(lesson1)
 
         lessons = [
            (u'Apresentando: Bancos de Dados', u'Para que servem os bancos de dados'),
@@ -111,6 +121,81 @@ def initial_dev_data():
         DBSession.add(course_professors2)
 
         DBSession.add(course)
+
+        # Create blocks
+        activity1 = MultipleChoice()
+        activity1.title = u'Exercício multipla escolha1'
+        DBSession.add(activity1)
+
+        activity2 = MultipleChoice()
+        activity2.title = u'Exercício multipla escolha2'
+        DBSession.add(activity2)
+
+        activity3 = SingleChoice()
+        activity3.title = u'Exercício escolha simples1'
+        DBSession.add(activity3)
+
+        video1 = Video()
+        video1.name = u'Video 1 de teste'
+        DBSession.add(video1)
+
+        video2 = Video()
+        video2.name = u'Video 2 de teste'
+        DBSession.add(video2)
+
+        video3 = Video()
+        video3.name = u'Video 3 de teste'
+        DBSession.add(video3)
+
+        video4 = Video()
+        video4.name = u'Video 4 de teste'
+        DBSession.add(video4)
+
+        video5 = Video()
+        video5.name = u'Video 5 de teste'
+        DBSession.add(video5)
+
+        video6 = Video()
+        video6.name = u'Video 6 de teste'
+        DBSession.add(video6)
+
+        block1 = Block()
+        block1.activity = activity1
+        block1.lessons.append(lesson1)
+        DBSession.add(block1)
+
+        block2 = Block()
+        block2.activity = activity2
+        block2.video = video1
+        block2.lessons.append(lesson1)
+        DBSession.add(block2)
+
+        block3 = Block()
+        block3.video = video2
+        block3.lessons.append(lesson1)
+        DBSession.add(block3)
+
+        block4 = Block()
+        block4.video = video3
+        block4.lessons.append(lesson1)
+        DBSession.add(block4)
+
+        block5 = Block()
+        block5.video = video4
+        block5.lessons.append(lesson1)
+        DBSession.add(block5)
+
+        block6 = Block()
+        block6.activity = activity3
+        block6.video = video5
+        block6.lessons.append(lesson1)
+        DBSession.add(block6)
+
+        block7 = Block()
+        block7.video = video6
+        block7.lessons.append(lesson1)
+        DBSession.add(block7)
+
 
 def main(argv=sys.argv):
     if len(argv) != 2:
