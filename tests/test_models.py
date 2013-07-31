@@ -94,6 +94,9 @@ class TestViews(BaseTestCase):
             CourseProfessors,
             User,
             Lesson,
+            MultipleChoice,
+            Video,
+            Block,
         )
         course = Course()
         course.slug = u'dbsql'
@@ -121,6 +124,21 @@ class TestViews(BaseTestCase):
         course.lessons.append(lesson)
         self.session.add(lesson)
 
+        # Create blocks
+        activity1 = MultipleChoice()
+        activity1.title = u'Exercício multipla escolha1'
+        self.session.add(activity1)
+
+        video1 = Video()
+        video1.name = u'Video 1 de teste'
+        self.session.add(video1)
+
+        block1 = Block()
+        block1.activity = activity1
+        block1.video = video1
+        block1.lessons.append(lesson)
+        self.session.add(block1)
+
         request = testing.DummyRequest()
         request.matchdict['course'] = u'dbsql'
         request.matchdict['lesson'] = u'Apresentando: Bancos de Dados'
@@ -129,6 +147,8 @@ class TestViews(BaseTestCase):
 
         assert response['lesson'] == lesson
         assert response['lesson'].course == course
+        assert response['lesson'].blocks[0] == block1
+        assert response['lesson'].blocks[0].video == video1
 
     def test_index(self):
         from timtec.views import CourseController
