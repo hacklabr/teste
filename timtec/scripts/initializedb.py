@@ -81,11 +81,11 @@ def initial_dev_data():
         DBSession.add(lesson1)
 
         lessons = [
-           (u'Apresentando: Bancos de Dados', u'Para que servem os bancos de dados'),
-           (u'Programas para operar bancos de dados', u'Software para bancos de dados'),
-           (u'O que é SQL', u'Ésse-quê-éle'),
-           (u'Organizando os dados', u'Organizando os dados'),
-           (u'Instalar e testar o SQLite', u'Instalar os programas para praticar'),
+            (u'Apresentando: Bancos de Dados', u'Para que servem os bancos de dados'),
+            (u'Programas para operar bancos de dados', u'Software para bancos de dados'),
+            (u'O que é SQL', u'Ésse-quê-éle'),
+            (u'Organizando os dados', u'Organizando os dados'),
+            (u'Instalar e testar o SQLite', u'Instalar os programas para praticar'),
         ]
 
         for lesson_title, lesson_desc in lessons:
