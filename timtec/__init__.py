@@ -2,7 +2,12 @@ from pyramid.httpexceptions import HTTPNotFound
 from pyramid.config import Configurator
 from sqlalchemy import engine_from_config
 from hem.interfaces import IDBSession
+from pyramid.authentication import SessionAuthenticationPolicy
+from pyramid.authorization import ACLAuthorizationPolicy
 from pyramid_beaker import session_factory_from_settings
+from pyramid.decorator import reify
+from pyramid.request import Request
+from pyramid.security import unauthenticated_userid
 from .models import (
     DBSession,
     Base,
@@ -24,6 +29,8 @@ def main(global_config, **settings):
     config = Configurator(settings=settings)
     config.set_session_factory(session_factory)
     config.registry.registerUtility(DBSession, IDBSession)
+    config.set_authentication_policy(SessionAuthenticationPolicy())
+    config.set_authorization_policy(ACLAuthorizationPolicy())
     # config.scan_horus(models)
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.scan_horus(models)
