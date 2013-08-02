@@ -57,7 +57,7 @@
                         <strong><i class="icon-tasks"></i> Dedicação extra:</strong> ${course.extra_dadication}
                     </p>
                     <ul class="no-bullet">
-                        <li class="clearfix"><a href="aula.html" class="btn btn-large btn-course btn-tim span12">Começar o curso</a></li>
+                        <li class="clearfix"><a href="${first_lesson_url}" class="btn btn-large btn-course btn-tim span12">Começar o curso</a></li>
                         <li tal:repeat="lesson course.lessons">
                             <span class="title">${lesson.name}</span>
                             ${lesson.desc}

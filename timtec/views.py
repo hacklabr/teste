@@ -17,7 +17,13 @@ class CourseController(BaseView):
     def intro(self):
         course_slug = self.request.matchdict.get('course', 'dbsql')
         course = DBSession.query(Course).filter(Course.slug == course_slug).first()
-        return {u'course': course}
+        first_lesson = DBSession.query(Course).filter(Course.slug == course_slug) \
+            .join(Course.lessons).filter(Lesson.position == 1).first()
+        if first_lesson:
+            first_lesson_url = self.request.route_path('lesson', course=course_slug, lesson=first_lesson.name)
+        else:
+            first_lesson_url = ''
+        return {u'course': course, u'first_lesson_url': first_lesson_url}
 
     @view_config(route_name='lesson', renderer='templates/lesson.pt')
     def lesson(self, course_slug=u'dbsql'):
