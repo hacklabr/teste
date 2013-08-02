@@ -23,5 +23,6 @@ class CourseController(BaseView):
     def lesson(self, course_slug=u'dbsql'):
         course_slug = self.request.matchdict['course']
         lesson_name = self.request.matchdict['lesson']
-        lesson = DBSession.query(Lesson).join(Course).filter(Lesson.name == lesson_name).filter(Course.slug == course_slug).first()
+        lesson = DBSession.query(Lesson).join(Lesson.course) \
+            .filter(Lesson.name == lesson_name).filter(Course.slug == course_slug).first()
         return {u'lesson': lesson}
