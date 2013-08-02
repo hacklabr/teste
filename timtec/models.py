@@ -137,6 +137,7 @@ class CourseProfessors(Base):
 class Lesson(Base):
     name = sa.Column(sa.Unicode(255))
     desc = sa.Column(sa.Unicode(255))
+    position = sa.Column(sa.Integer())
     course_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Course.__tablename__)))
     course = relationship('Course', backref='lessons')
     students = relationship('LessonStudent', backref='lessons')

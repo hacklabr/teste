@@ -74,25 +74,22 @@ def initial_dev_data():
         course.time_estimated = u'1 mês'
         course.extra_dadication = u'40 horas'
 
-        lesson1 = Lesson()
-        lesson1.name = u'Apresentando: Bancos de Dados'
-        lesson1.desc = u'Para que servem os bancos de dados'
-        course.lessons.append(lesson1)
-        DBSession.add(lesson1)
-
         lessons = [
-            (u'Apresentando: Bancos de Dados', u'Para que servem os bancos de dados'),
-            (u'Programas para operar bancos de dados', u'Software para bancos de dados'),
-            (u'O que é SQL', u'Ésse-quê-éle'),
-            (u'Organizando os dados', u'Organizando os dados'),
-            (u'Instalar e testar o SQLite', u'Instalar os programas para praticar'),
+            (1, u'Apresentando: Bancos de Dados', u'Para que servem os bancos de dados'),
+            (2, u'Programas para operar bancos de dados', u'Software para bancos de dados'),
+            (3, u'O que é SQL', u'Ésse-quê-éle'),
+            (4, u'Organizando os dados', u'Organizando os dados'),
+            (5, u'Instalar e testar o SQLite', u'Instalar os programas para praticar'),
         ]
 
-        for lesson_title, lesson_desc in lessons:
+        for position, lesson_title, lesson_desc in lessons:
             lesson = Lesson()
+            lesson.position = position
             lesson.name = lesson_title
             lesson.desc = lesson_desc
             course.lessons.append(lesson)
+            if lesson.position == 1:
+                lesson1 = lesson
             DBSession.add(lesson)
 
         user1 = User(username='ramalho', password='kdkdk', email='skdsk@vcx')
