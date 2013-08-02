@@ -182,9 +182,9 @@ class Block(Base):
 
 
 lesson_block = sa.Table('lesson_block', Base.metadata,
-    sa.Column(u'lesson_id', sa.Integer, sa.ForeignKey('{0}.id'.format(Lesson.__tablename__))),
-    sa.Column(u'block_id', sa.Integer, sa.ForeignKey('{0}.id'.format(Block.__tablename__)))
-)
+                        sa.Column(u'lesson_id', sa.Integer, sa.ForeignKey('{0}.id'.format(Lesson.__tablename__))),
+                        sa.Column(u'block_id', sa.Integer, sa.ForeignKey('{0}.id'.format(Block.__tablename__))),
+                        )
 
 
 class MultipleChoice(Activity):
