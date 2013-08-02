@@ -190,6 +190,8 @@ lesson_block = sa.Table('lesson_block', Base.metadata,
 
 class MultipleChoice(Activity):
     id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Activity.__tablename__)), primary_key=True)
+    question = sa.Column(sa.UnicodeText())
+    choices = relationship('Choice')
 
     __mapper_args__ = {
         'polymorphic_identity': 'multiple_choice',
@@ -198,6 +200,8 @@ class MultipleChoice(Activity):
 
 class TrueFalse(Activity):
     id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Activity.__tablename__)), primary_key=True)
+    question = sa.Column(sa.UnicodeText())
+    choices = relationship('Choice')
 
     __mapper_args__ = {
         'polymorphic_identity': 'true_false',
@@ -206,9 +210,20 @@ class TrueFalse(Activity):
 
 class SingleChoice(Activity):
     id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Activity.__tablename__)), primary_key=True)
+    question = sa.Column(sa.UnicodeText())
+    choices = relationship('Choice')
 
     __mapper_args__ = {
         'polymorphic_identity': 'single_choice',
+    }
+
+
+class FreeText(Activity):
+    id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Activity.__tablename__)), primary_key=True)
+    question = sa.Column(sa.UnicodeText())
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'free_text',
     }
 
 
@@ -228,9 +243,20 @@ class MultipleTrueFalse(Activity):
     }
 
 
-class FreeText(Activity):
-    id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Activity.__tablename__)), primary_key=True)
+class Choice(Base):
+    multiple_choice_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(MultipleChoice.__tablename__)))
+    single_choice_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(SingleChoice.__tablename__)))
+    true_false_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(TrueFalse.__tablename__)))
+    text = sa.Column(sa.UnicodeText())
+    x_position = sa.Column(sa.Integer())
+    y_position = sa.Column(sa.Integer())
+    order = sa.Column(sa.Integer())
 
-    __mapper_args__ = {
-        'polymorphic_identity': 'free_text',
-    }
+
+class Answer(Base):
+    activity_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Activity.__tablename__)))
+    activity = relationship('Activity', uselist=False)
+    user_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(User.__tablename__)), nullable=False)
+    user = relationship('User', uselist=False)
+    timestamp = sa.Column(sa.DateTime())
+    free_text_answer = sa.Column(sa.UnicodeText())
