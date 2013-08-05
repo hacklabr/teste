@@ -11,7 +11,7 @@ class BaseView(object):
         self.request = request
 
 
-iclass CourseController(BaseView):
+class CourseController(BaseView):
     @view_config(route_name='index', renderer='templates/course_intro.pt')
     @view_config(route_name='course_intro', renderer='templates/course_intro.pt')
     def intro(self):
@@ -24,8 +24,8 @@ iclass CourseController(BaseView):
         else:
             first_lesson_url = ''
         return {u'course': course, u'first_lesson_url': first_lesson_url}
-i
- i   @view_config(route_name='lesson', renderer='templates/lesson.pt')
+
+    @view_config(route_name='lesson', renderer='templates/lesson.pt')
     def lesson(self, course_slug=u'dbsql'):
         course_slug = self.request.matchdict['course']
         lesson_name = self.request.matchdict['lesson']
