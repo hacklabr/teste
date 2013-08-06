@@ -30,10 +30,9 @@ def initial_dev_data():
         Course,
         Lesson,
         CourseProfessors,
-        MultipleChoice,
-        SingleChoice,
         Video,
         Block,
+        Activity,
     )
     with transaction.manager:
         course = Course()
@@ -120,17 +119,26 @@ def initial_dev_data():
         DBSession.add(course)
 
         # Create blocks
-        activity1 = MultipleChoice()
+        activity1 = Activity()
         activity1.title = u'Exercício multipla escolha1'
+        activity1.type = u'multiplechoice'
+        activity1.data = u'{question: "Este é um exemplo de teste de multipla escolha", choices: ["Esta escolha é boa!", "Esta também é esperada", "Esta obviamente não é a a correta"]}'
+        activity1.espected_answer_data = u'{choices: [0, 1]}'
         DBSession.add(activity1)
 
-        activity2 = MultipleChoice()
+        activity2 = Activity()
         activity2.title = u'Exercício multipla escolha2'
+        activity1.type = u'singlechoice'
+        activity1.data = u'{question: "Este é um exemplo de teste de multipla escolha", choices: ["Esta escolha é boa!", "Esta não.", "Esta obviamente não é a a correta"]}'
+        activity1.espected_answer_data = u'{choice: 1}'
         DBSession.add(activity2)
 
-        activity3 = SingleChoice()
-        activity3.title = u'Exercício escolha simples1'
-        DBSession.add(activity3)
+#         activity3 = Activity()
+#         activity3.title = u'Exercício escolha simples1'
+#         activity3.type = u'singlechoice'
+#         activity3.data = u''
+#         activity3.espected_answer_data = u''
+#         DBSession.add(activity3)
 
         video1 = Video()
         video1.name = u'Video 1 de teste'
@@ -183,7 +191,7 @@ def initial_dev_data():
         DBSession.add(block5)
 
         block6 = Block()
-        block6.activity = activity3
+#         block6.activity = activity3
         block6.video = video5
         block6.lessons.append(lesson1)
         DBSession.add(block6)

@@ -94,9 +94,9 @@ class TestViews(BaseTestCase):
             CourseProfessors,
             User,
             Lesson,
-            MultipleChoice,
             Video,
             Block,
+            Activity,
         )
         course = Course()
         course.slug = u'dbsql'
@@ -125,7 +125,7 @@ class TestViews(BaseTestCase):
         self.session.add(lesson)
 
         # Create blocks
-        activity1 = MultipleChoice()
+        activity1 = Activity()
         activity1.title = u'Exercício multipla escolha1'
         self.session.add(activity1)
 

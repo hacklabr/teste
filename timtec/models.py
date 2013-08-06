@@ -164,6 +164,17 @@ class Access(Base):
 
 
 class Activity(Base):
+    """Generic class to activities
+    Data templates (data e type atributes):
+    Multiple choice
+        type: multiplechoice
+        data: {question: "", choices: ["choice1", "choice2", ...]}
+        expected_answer_data: {choices: [0, 2, 5]} # list of espected choices, zero starting
+    Single choice
+        type: singlechoice
+        data: {question: "", choices: ["choice1", "choice2", ...]}
+        expected_answer_data: {choice: 1}
+    """
     title = sa.Column(sa.Unicode(255))
     type = sa.Column(sa.Unicode(255))
     data = sa.Column(sa.UnicodeText())
