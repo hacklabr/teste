@@ -165,12 +165,10 @@ class Access(Base):
 
 class Activity(Base):
     title = sa.Column(sa.Unicode(255))
-    type = sa.Column(sa.String(255))
+    type = sa.Column(sa.Unicode(255))
+    data = sa.Column(sa.UnicodeText())
+    expected_answer_data = sa.Column(sa.UnicodeText())
     block = relationship('Block', uselist=False)
-    __mapper_args__ = {
-        'polymorphic_identity': 'activity',
-        'polymorphic_on': type
-    }
 
 
 class Block(Base):
@@ -186,71 +184,6 @@ lesson_block = sa.Table('lesson_block', Base.metadata,
                         sa.Column(u'lesson_id', sa.Integer, sa.ForeignKey('{0}.id'.format(Lesson.__tablename__))),
                         sa.Column(u'block_id', sa.Integer, sa.ForeignKey('{0}.id'.format(Block.__tablename__))),
                         )
-
-
-class MultipleChoice(Activity):
-    id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Activity.__tablename__)), primary_key=True)
-    question = sa.Column(sa.UnicodeText())
-    choices = relationship('Choice')
-
-    __mapper_args__ = {
-        'polymorphic_identity': 'multiple_choice',
-    }
-
-
-class TrueFalse(Activity):
-    id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Activity.__tablename__)), primary_key=True)
-    question = sa.Column(sa.UnicodeText())
-    choices = relationship('Choice')
-
-    __mapper_args__ = {
-        'polymorphic_identity': 'true_false',
-    }
-
-
-class SingleChoice(Activity):
-    id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Activity.__tablename__)), primary_key=True)
-    question = sa.Column(sa.UnicodeText())
-    choices = relationship('Choice')
-
-    __mapper_args__ = {
-        'polymorphic_identity': 'single_choice',
-    }
-
-
-class FreeText(Activity):
-    id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Activity.__tablename__)), primary_key=True)
-    question = sa.Column(sa.UnicodeText())
-
-    __mapper_args__ = {
-        'polymorphic_identity': 'free_text',
-    }
-
-
-class OrderActivity(Activity):
-    id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Activity.__tablename__)), primary_key=True)
-
-    __mapper_args__ = {
-        'polymorphic_identity': 'order',
-    }
-
-
-class MultipleTrueFalse(Activity):
-    id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Activity.__tablename__)), primary_key=True)
-
-    __mapper_args__ = {
-        'polymorphic_identity': 'multiple_true_false',
-    }
-
-
-class Choice(Base):
-    multiple_choice_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(MultipleChoice.__tablename__)))
-    single_choice_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(SingleChoice.__tablename__)))
-    true_false_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(TrueFalse.__tablename__)))
-    text = sa.Column(sa.UnicodeText())
-    x_position = sa.Column(sa.Integer())
-    y_position = sa.Column(sa.Integer())
-    order = sa.Column(sa.Integer())
 
 
 class Answer(Base):
