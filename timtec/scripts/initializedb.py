@@ -128,17 +128,11 @@ def initial_dev_data():
 
         activity2 = Activity()
         activity2.title = u'Exercício multipla escolha2'
-        activity1.type = u'singlechoice'
-        activity1.data = u'{question: "Este é um exemplo de teste de multipla escolha", choices: ["Esta escolha é boa!", "Esta não.", "Esta obviamente não é a a correta"]}'
-        activity1.espected_answer_data = u'{choice: 1}'
+        activity2.type = u'singlechoice'
+        activity2.data = u'{question: "Este é um exemplo de teste de multipla escolha", choices: ["Esta escolha é boa!", "Esta não.", "Esta obviamente não é a a correta"]}'
+        activity2.espected_answer_data = u'{choice: 1}'
         DBSession.add(activity2)
 
-#         activity3 = Activity()
-#         activity3.title = u'Exercício escolha simples1'
-#         activity3.type = u'singlechoice'
-#         activity3.data = u''
-#         activity3.espected_answer_data = u''
-#         DBSession.add(activity3)
 
         video1 = Video()
         video1.name = u'Video 1 de teste'
@@ -165,41 +159,42 @@ def initial_dev_data():
         DBSession.add(video6)
 
         block1 = Block()
-        block1.activity = activity1
+        block1.video = video1
+        block1.position = 1
         block1.lessons.append(lesson1)
         DBSession.add(block1)
 
         block2 = Block()
+        block2.video = video2
         block2.activity = activity2
-        block2.video = video1
+        block2.position = 2
         block2.lessons.append(lesson1)
         DBSession.add(block2)
 
         block3 = Block()
-        block3.video = video2
+        block3.video = video3
+        block3.activity = activity1
+        block3.position = 3
         block3.lessons.append(lesson1)
         DBSession.add(block3)
 
         block4 = Block()
-        block4.video = video3
+        block4.video = video4
+        block4.position = 4
         block4.lessons.append(lesson1)
         DBSession.add(block4)
 
         block5 = Block()
-        block5.video = video4
+        block5.video = video5
+        block5.position = 5
         block5.lessons.append(lesson1)
         DBSession.add(block5)
 
         block6 = Block()
-#         block6.activity = activity3
-        block6.video = video5
+        block6.video = video6
+        block6.position = 6
         block6.lessons.append(lesson1)
         DBSession.add(block6)
-
-        block7 = Block()
-        block7.video = video6
-        block7.lessons.append(lesson1)
-        DBSession.add(block7)
 
 
 def main(argv=sys.argv):
