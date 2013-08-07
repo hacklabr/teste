@@ -86,14 +86,14 @@
                 </div>
             </div>
             
-            <div class="track done">
+<!--             <div class="track done">
                 <div class="track-title">Aula 1: Introdução a banco de dados</div>
             </div>
             
             <div class="track watching">
                 <i class="icon-list icon-white"></i>
                 <div class="track-title">Aula 1: Introdução a banco de dados</div>
-            </div>
+            </div> -->
             
             <div class="track" tal:repeat="block lesson.blocks">
                 <i class="icon-list icon-white"></i>
@@ -107,7 +107,9 @@
             
             <!-- Player -->
             <div class="span8">
-                <iframe class="span12 img-polaroid" height="482" src="http://www.youtube.com/embed/VZvgj6B2JZs" frameborder="0" allowfullscreen></iframe>
+                <div class="span12 img-polaroid">
+                    <div id="videotag"></div>
+                </div>
             </div>
             <!-- END Player -->
 
@@ -224,15 +226,15 @@
                     <h3 class="clearfix">
                         <div class="alignleft">Perguntas e Respostas</div>
                         <div class="input-append alignright bottom">
-                            <input class="span12" id="appendedInputButton" type="search" placeholder="Pesquisar perguntas">
+                            <input class="span12" id="appendedInputButton" type="search" placeholder="Pesquisar perguntas"></input>
                             <button class="btn" type="button"><i class="icon-search"></i></button>
                         </div>
                     </h3>
                     <form>
-                        <input type="text" class="span12" placeholder="Qual é a sua dúvida?">
+                        <input type="text" class="span12" placeholder="Qual é a sua dúvida?"></input>
                         <textarea class="span12" rows="4" placeholder="Descrição da sua dúvida"></textarea>
                         <p class="textright">
-                            <input type="submit" class="btn btn-info" value="Enviar">
+                            <input type="submit" class="btn btn-info" value="Enviar"></input>
                         </p>
                     </form>
                 </header>
@@ -393,5 +395,6 @@
                 <p>Et pid habitasse! Natoque dapibus pellentesque lacus? Platea pulvinar, porta elementum sagittis, urna cursus etiam, lacus ut pulvinar elementum odio vel, montes augue, est. Nec sit aliquam et pulvinar! Dictumst nascetur ridiculus tincidunt scelerisque! Natoque risus porttitor, adipiscing cum? Eu sit duis? Et! Vut etiam pulvinar? Ut nec phasellus.</p>
             </section>
         </div>
+<script src="${request.static_url('timtec:static/js/lesson.js')}" type="text/javascript"></script>
 </div>
 </metal:main>

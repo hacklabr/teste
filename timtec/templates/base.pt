@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <title>timtec</title>
 
-    <link rel="stylesheet/less" href="${request.static_url('timtec:static/css/bootstrap/bootstrap.less')}" type="text/css">
-    <link rel="stylesheet/less" href="${request.static_url('timtec:static/css/bootstrap/responsive.less')}" type="text/css">
+    <link rel="stylesheet/less" href="${request.static_url('timtec:static/css/bootstrap/bootstrap.less')}" type="text/css" />
+    <link rel="stylesheet/less" href="${request.static_url('timtec:static/css/bootstrap/responsive.less')}" type="text/css" />
     <link rel="shortcut icon" href="${request.static_url('timtec:static/img/favicon.ico')}" />
 
-    
     <script type="text/javascript">
         // less = {
         //     env: "development", // or "production"
