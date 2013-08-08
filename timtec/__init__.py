@@ -37,6 +37,7 @@ def main(global_config, **settings):
     config.add_route('index', '/')
     config.add_route('course_intro', '/{course}/intro/')
     config.add_route('lesson', '/{course}/{lesson}/')
+    config.add_route('lesson_rest', '/rest/{course}/{lesson}/')
     config.add_notfound_view(notfound, append_slash=True)
     config.include('horus')
     config.include('pyramid_mailer')

@@ -1,4 +1,4 @@
-from pyramid.view import view_config
+from pyramid.view import view_config, view_defaults
 from .models import (
     DBSession,
     Course,
@@ -32,3 +32,16 @@ class CourseController(BaseView):
         lesson = DBSession.query(Lesson).join(Lesson.course) \
             .filter(Lesson.name == lesson_name).filter(Course.slug == course_slug).first()
         return {u'lesson': lesson}
+
+
+@view_defaults(route_name='lesson_rest', renderer="json")
+class LessonRest(BaseView):
+    @view_config(request_method='GET')
+    def get(self):
+        course_slug = self.request.matchdict['course']
+        lesson_name = self.request.matchdict['lesson']
+        lesson = DBSession.query(Lesson).join(Lesson.course) \
+            .filter(Lesson.name == lesson_name).filter(Course.slug == course_slug).first()
+        response = {}
+        response['blocks'] = lesson.blocks
+        return response

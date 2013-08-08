@@ -81,6 +81,9 @@ class Video(Base):
     accesses = relationship('AccessedVideo', backref='access_videos')
     block = relationship('Block', uselist=False)
 
+    def __json__(self, request):
+        return {u'youtube_id': self.youtube_id, u'name': self.name}
+
 
 class AccessedVideo(Base):
     video_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Video.__tablename__)))
@@ -142,7 +145,7 @@ class Lesson(Base):
     course_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Course.__tablename__)))
     course = relationship('Course', backref='lessons')
     students = relationship('LessonStudent', backref='lessons')
-    blocks = relationship('Block', secondary='lesson_block')
+    blocks = relationship('Block', secondary='lesson_block', order_by="Block.position")
 
 
 class LessonStudent(Base):
@@ -182,6 +185,14 @@ class Activity(Base):
     expected_answer_data = sa.Column(sa.UnicodeText())
     block = relationship('Block', uselist=False)
 
+    def __json__(self, request):
+        return {
+            u'title': self.title,
+            u'type': self.type,
+            u'data': self.data,
+            u'expected_answer_data': self.expected_answer_data
+        }
+
 
 class Block(Base):
     activity_id = sa.Column(sa.Integer, sa.ForeignKey('{0}.id'.format(Activity.__tablename__)))
@@ -190,6 +201,9 @@ class Block(Base):
     video = relationship('Video', uselist=False)
     lessons = relationship('Lesson', secondary='lesson_block')
     position = sa.Column(sa.Integer())
+
+    def __json__(self, request):
+            return {u'activity': self.activity, u'video': self.video, u'position': self.position}
 
 
 lesson_block = sa.Table('lesson_block', Base.metadata,
