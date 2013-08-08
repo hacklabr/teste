@@ -106,6 +106,7 @@ class Course(Base):
     # discutir com anderson como vai ser o tempo estimado
     time_estimated = sa.Column(sa.Unicode(255))
     extra_dadication = sa.Column(sa.Unicode(255))
+    publication_date = sa.Column(sa.Date())
 
     def __unicode__(self):
         """This is used to render the model in a relation field. Must return an
