@@ -86,19 +86,9 @@
                 </div>
             </div>
             
-<!--             <div class="track done">
-                <div class="track-title">Aula 1: Introdução a banco de dados</div>
-            </div>
-            
-            <div class="track watching">
-                <i class="icon-list icon-white"></i>
-                <div class="track-title">Aula 1: Introdução a banco de dados</div>
-            </div> -->
-            
             <div class="track" tal:repeat="block lesson.blocks">
-                <i class="icon-list icon-white"></i>
+                <i tal:condition="block.activity" class="icon-list icon-white"></i>
                 <div class="track-title" tal:condition="block.video" tal:content="block.video.name"></div>
-                <div class="track-title" tal:condition="block.activity" tal:content="block.activity.title"></div>
             </div>
         </section>
         
