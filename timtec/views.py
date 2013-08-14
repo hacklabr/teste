@@ -42,6 +42,4 @@ class LessonRest(BaseView):
         lesson_name = self.request.matchdict['lesson']
         lesson = DBSession.query(Lesson).join(Lesson.course) \
             .filter(Lesson.name == lesson_name).filter(Course.slug == course_slug).first()
-        response = {}
-        response['blocks'] = lesson.blocks
-        return response
+        return {'blocks': lesson.blocks}
