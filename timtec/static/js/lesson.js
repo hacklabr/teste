@@ -1,6 +1,5 @@
 // 2. This code loads the IFrame Player API code asynchronously.
 var tag = document.createElement('script');
-
 tag.src = "//www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
@@ -9,7 +8,6 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 //    after the API code downloads.
 var player;
 function onYouTubeIframeAPIReady() {
-    console.log('aqui');
     player = new YT.Player('videotag', {
         height: '433',
         width: '770',
@@ -30,17 +28,41 @@ function onYouTubeIframeAPIReady() {
     });
 }
 
-// 4. The API will call this function when the video player is ready.
 function onPlayerReady(event) {
     // event.target.playVideo();
 }
 
-// 5. The API calls this function when the player's state changes.
-//    The function indicates that when playing a video (state=1),
-//    the player should play for six seconds and then stop.
+var play1 = true;
+
 function onPlayerStateChange(event) {
-    if (event.data == YT.PlayerState.ENDED) {
+    if (event.data == YT.PlayerState.ENDED && play1) {
         console.log('carregando próximo');
         player.loadVideoById('OuSdU8tbcHY');
+        play1 = false;
     }
 }
+
+var Lesson = {
+    init: function(defconfigs) {
+        Lesson.config = {
+        };
+
+        $.extend(Lesson.config, defconfigs);
+
+        $.getJSON('/rest' + window.location.pathname, Lesson.loadData);
+    },
+
+    loadData: function(data) {
+        console.log(data);
+    },
+
+    hashChange: function(event) {
+        var state = $.bbq.getState();
+        console.log(state);
+    }
+};
+
+$(function() {
+    Lesson.init({'player': player});
+    $(window).on('hashchange', Lesson.hashChange);
+});

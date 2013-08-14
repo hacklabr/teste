@@ -86,10 +86,10 @@
                 </div>
             </div>
             
-            <div class="track" tal:repeat="block lesson.blocks">
+            <a class="track" tal:repeat="block lesson.blocks" tal:attributes="href '#blk='+str(block.position)">
                 <i tal:condition="block.activity" class="icon-list icon-white"></i>
                 <div class="track-title" tal:condition="block.video" tal:content="block.video.name"></div>
-            </div>
+            </a>
         </section>
         
         <!-- Video -->
