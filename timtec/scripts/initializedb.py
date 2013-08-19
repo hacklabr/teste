@@ -136,10 +136,12 @@ def initial_dev_data():
 
         video1 = Video()
         video1.name = u'Video 1 de teste'
+        video1.youtube_id = 'UFKF5jjsqOY'
         DBSession.add(video1)
 
         video2 = Video()
         video2.name = u'Video 2 de teste'
+        video2.youtube_id = 'OuSdU8tbcHY'
         DBSession.add(video2)
 
         video3 = Video()
@@ -160,39 +162,39 @@ def initial_dev_data():
 
         block1 = Block()
         block1.video = video1
-        block1.position = 1
+        block1.position = 0
         block1.lessons.append(lesson1)
         DBSession.add(block1)
 
         block2 = Block()
         block2.video = video2
         block2.activity = activity2
-        block2.position = 2
+        block2.position = 1
         block2.lessons.append(lesson1)
         DBSession.add(block2)
 
         block3 = Block()
         block3.video = video3
         block3.activity = activity1
-        block3.position = 3
+        block3.position = 2
         block3.lessons.append(lesson1)
         DBSession.add(block3)
 
         block4 = Block()
         block4.video = video4
-        block4.position = 4
+        block4.position = 3
         block4.lessons.append(lesson1)
         DBSession.add(block4)
 
         block5 = Block()
         block5.video = video5
-        block5.position = 5
+        block5.position = 4
         block5.lessons.append(lesson1)
         DBSession.add(block5)
 
         block6 = Block()
         block6.video = video6
-        block6.position = 6
+        block6.position = 5
         block6.lessons.append(lesson1)
         DBSession.add(block6)
 
